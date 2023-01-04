@@ -5,3 +5,4 @@ from . import back
 from . import kanallar
 from . import botlar
 from . import guruh
+from . import batafsil

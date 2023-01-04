@@ -62,3 +62,18 @@ kanal = ReplyKeyboardMarkup(
     ], 
     resize_keyboard=True, one_time_keyboard=True
 )
+
+
+# Batafsil
+batafsil = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="📃 Qo'llanma"),
+            KeyboardButton(text="📌 Shartlar")
+        ],
+        [
+            KeyboardButton(text="◀️ Orqaga")
+        ]
+    ],
+    resize_keyboard=True, one_time_keyboard=True
+)
