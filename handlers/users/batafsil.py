@@ -1,7 +1,8 @@
-from loader import dp
+from loader import dp, db
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from keyboards.default.types import batafsil
+from keyboards.inline.adminuser import adminuser
 
 @dp.message_handler(text="📜 Batafsil", state='*')
 async def kanallar(message: types.Message, state: FSMContext):
@@ -10,8 +11,12 @@ async def kanallar(message: types.Message, state: FSMContext):
 
 @dp.message_handler(text="📃 Qo'llanma", state='*')
 async def kanallar(message: types.Message, state: FSMContext):
-    text = """<b>Botdan qanday foydalanish kerak</b>❓
-              
-Botdan foydalanish qiyin emas! O'zingizga kerakli turdagi reklama tanlaysiz va siz tanlagan reklama adminga boradi va admin sizga aloqaga chiqadi"""
-    await message.answer(text=text)
+    text = db.select_qollanma()[0][0]
+    await message.answer(text=text, reply_markup=adminuser)
+    await state.finish()
+
+@dp.message_handler(text="📌 Shartlar", state='*')
+async def kanallar(message: types.Message, state: FSMContext):
+    text = db.select_shartlar()[0][0]
+    await message.answer(text=text, reply_markup=adminuser)
     await state.finish()

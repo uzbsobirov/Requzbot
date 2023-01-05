@@ -37,7 +37,47 @@ class Database:
             PRIMARY KEY (id)
             );
 """
+
         self.execute(sql, commit=True)
+
+    def create_table_main(self):
+        sql = """
+            CREATE TABLE Main (
+                id int PRIMARY KEY NOT NULL,
+                qollanma TEXT NULL,
+                shartlar TEXT NULL
+                );
+    """
+        self.execute(sql, commit=True)
+
+    def create_table_kanal(self):
+        sql = """
+        CREATE TABLE Kanal (
+            id int PRIMARY KEY NOT NULL,
+            username TEXT NOT NULL,
+            kunlikpm TEXT NOT NULL,
+            obunachilari INTEGER NOT NULL,
+            kanalnomi TEXT NOT NULL,
+            type1 INTEGER NOT NULL,
+            type2 INTEGER NOT NULL,
+            type3 INTEGER NOT NULL,
+            slug TEXT NOT NULL
+            );
+"""
+        self.execute(sql, commit=True)
+
+    def create_table_bot(self):
+        sql = """
+            CREATE TABLE Bot (
+                id int PRIMARY KEY NOT NULL,
+                username TEXT NOT NULL,
+                obunachilari INTEGER NOT NULL,
+                botnomi TEXT NOT NULL,
+                rekpuli INTEGER NOT NULL
+                );
+    """
+        self.execute(sql, commit=True)
+
 
     @staticmethod
     def format_args(sql, parameters: dict):
@@ -60,11 +100,24 @@ class Database:
         """
         return self.execute(sql, fetchall=True)
 
-    def select_user(self, **kwargs):
-        # SQL_EXAMPLE = "SELECT * FROM Users where id=1 AND Name='John'"
-        sql = "SELECT * FROM Users WHERE "
-        sql, parameters = self.format_args(sql, kwargs)
 
+
+    def select_qollanma(self):
+        sql = """
+        SELECT qollanma FROM Main
+        """
+        return self.execute(sql, fetchall=True)
+
+    def select_shartlar(self):
+        sql = """
+        SELECT shartlar FROM Main
+        """
+        return self.execute(sql, fetchall=True)
+
+    def select_kanal(self, slug: str):
+        # SQL_EXAMPLE = "SELECT * FROM Users where id=1 AND Name='John'"
+        sql = "SELECT * FROM Kanal WHERE slug=?"
+        sql, parameters = self.format_args(sql, slug)
         return self.execute(sql, parameters=parameters, fetchone=True)
 
     def count_users(self):
